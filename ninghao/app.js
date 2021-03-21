@@ -16,5 +16,14 @@ var Note = Backbone.Model.extend({
             console.log('title发生了变化');
         });
 
+        this.on('invalid',function(model,error){
+            console.log(error);
+        });
+
+    },
+    validate:function(attributes,options){
+        if(attributes.title.length<3){
+            return 'title长度必须大于3';
+        }
     }
 });
