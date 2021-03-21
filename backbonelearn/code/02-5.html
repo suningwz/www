@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>the5fire-backbone-model</title>
+</head>
+<body>
+    <script src="lib/jquery.js"></script>
+    <script src="lib/underscore.js"></script>
+    <script src="lib/backbone.js"></script>
+    <script src="lib/backbone.localStorage.js"></script>
+    <script>
+    (function ($) {
+
+        // 1、最简单的一个对象
+        Man = Backbone.Model.extend({
+        initialize: function(){
+            alert('Hey, you create me!'+this.get('name'));
+            this.bind('change:name',function(model,option){   //实例name属性改变，调用事件函数，将实例（作为model参数）和name属性值（作为option参数）作为参数传入到事件函数
+                console.log(model);
+                console.log(option);
+            });
+            this.bind('change:name',function(){
+                var name=this.get('name');
+                alert("name的改变触发了我："+this.get('name'));
+            });
+            this.bind('invalid',function(model,error){   //实例绑定了invalid事件，当实例执行validate，将validae函数返回的结果（如果结果部位null的话），作为error参数掺入该事件函数
+                alert(error);
+            });
+        },
+        defaults:{name:"Lin",age:30},
+        validate:function(attributes){  //在实例执行save()函数时，会先调用validate函数，如果validate有返回值（即验证失败），则不会执行save函数。
+            if(attributes.name==''){
+                return "name不能为空";
+            }
+        },
+        });
+        var man = new Man;
+        alert('I\'m'+man.get('age'));
+        var name=prompt("请输入名字");
+        man.set({name:name})
+        alert('我把我的名字改为:'+man.get('name'));
+        man.save();  //执行save()时会提示：Uncaught Error: A "url" property or function must be specified。  所以该函数的执行应该还缺点什么
+    })(jQuery);
+    </script>
+</body>
+</html>

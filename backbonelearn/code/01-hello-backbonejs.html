@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>the5fire.com-backbone.js-Hello World</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+</head>
+<body>
+    <button id="check">点击我</button> 
+    <ul id="world-list">
+    </ul>
+    <a href="lib/jquery.js">打开当前页面所在路径的lib/jquery.js文件</a>
+    <script src="lib/jquery.js"></script>
+    <script src="lib/underscore.js"></script>
+    <script src="lib/backbone.js"></script>
+    <script>
+    (function ($) {   //定义函数，函数形参$，并马上执行（传入参数jQuery）
+            //lin 1、定义3个对象：Model、Collection、View；
+            //lin 2、View里通过events，监听id=“check”的元素click事件，绑定checkIn函数
+            //lin 3、checkIn函数弹出输入框；将用户输入的内容赋予变量world_name；实例化World对象；World实例添加到View实例属性worlds对应的Collection对象实例里
+            //lin 4、将world添加到Collection实例worlds里，触发了add事件，执行addOneWorld函数
+            //lin 5、实例化View对象
+            World = Backbone.Model.extend({
+                    //创建一个World的对象，拥有name属性
+                    name: null
+            });
+
+            Worlds = Backbone.Collection.extend({
+                    //World对象的集合
+                    initialize: function (models, options) { //options是实例化时传入的字典，option.view是字典option里view键对应的值，是View实例
+                            this.bind("add", options.view.addOneWorld);   //lin 向Collections添加model时，触发options.view.addOneWorld事件
+                    }
+            });
+
+            AppView = Backbone.View.extend({
+                    el: $("body"),
+                    initialize: function () {
+                            //构造函数，实例化一个World集合类，并且以字典方式传入AppView的对象
+                            this.worlds = new Worlds(null, { view : this })  //将View和Collection对象Worlds关联起来：定义worlds属性，属性值为Worlds对象实例
+                    },
+                    events: {
+                            "click #check":  "checkIn",   //事件绑定，绑定Dom中id为check的元素
+                    },
+                    checkIn: function (event) {  //形参event，实参为与该函数绑定的事件click事件
+                            var world_name = prompt("请问，您是哪星人?");  //prompt() 弹出个输入框 让你输入东西,输入的内容赋予变量world_name
+                            if(world_name == "") world_name = '未知';
+                            var world = new World({ name: world_name });
+                            this.worlds.add(world);
+                    },
+                    addOneWorld: function(model) {  //lin 向id时world-list的元素里添加如下内容
+                            $("#world-list").append("<li>这里是来自 <b>" + model.get('name') + "</b> 星球的问候：hello world！</li>");
+                    }
+            });
+            //实例化AppView
+            var appview = new AppView;
+    })(jQuery);
+    </script>
+</body>
+</html>

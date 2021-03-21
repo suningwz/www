@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>标准事件流(冒泡事件)</title>
+        <script type="text/javascript">
+            function show(sText){
+                var oDiv=document.getElementById("display");
+                oDiv.innerHTML+=sText;
+            }
+        </script>
+    </head>
+    <body onclick="show('body<br>')">
+        <div onclick="show('div<br>')">
+            <p onclick="show('p<br>')">click me</p><!--用此方法为通用型事件，HTML和js脚本混在一起，没有隔离开来。-->
+        </div>
+        <div id="display"></div>
+    </body>
+</html>
