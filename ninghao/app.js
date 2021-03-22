@@ -66,3 +66,34 @@ var noteView = new NoteView({    //实例化视图，设置这个视图实例关
 //noteView.el
 //noteView.render()
 //noteView.el
+
+/**
+ * 集合 - Collection
+ */
+
+var NoteCollection = Backbone.Collection.extend({
+    model:Note,
+
+    initialize:function(){
+        this.on({
+            'add':function(model,collection,options){
+                console.log('ID:'+model.id+'模型添加到了集合里');
+            },
+            'remove':function(model,collection,option){
+                console.log('ID:'+model.id+'模型从集合里删除了');
+            },
+            'change':function(model,option){
+                console.log('集合里的模型发生了变化');
+            }
+        })
+    }
+});
+
+var note1 = new Note({id:1,title:'麻婆豆腐的做法'});
+var note2 = new Note({id:2,title:'周六参加朋友的婚礼'});
+var note3 = new Note({id:3,title:'晚上回家洗尿布'});
+
+//对集合的操作：添加、删除、重置、更新、排序集合里的模型的时候，都会触发相应的事件。
+//add、remove、reset、set、pop、shift、push、unshift、at:index
+
+
