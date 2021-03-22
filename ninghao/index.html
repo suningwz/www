@@ -5,6 +5,16 @@
     <title>宁浩backbone练习</title>
 </head>
 <body>
+    <!--使用underscore模板，underscore的template()函数可以解析3种模板标签：
+            <%=  %>	标签中包含的通常是变量名、函数名、对象属性、执行时直接展现调用后的数据
+        script脚本代码解释：
+        script页签，设置type属性为text/template，浏览器就不会将这个识别为js脚本,标签里面的内容不会被执行，也不会显示在页面上，但是可以在另一个script里面通过获取插入到页面中
+        id为模板id，title为model的属性,small标签呈现小号字体效果
+    -->
+    <script type="text/template" id="list-template">
+        <span><%= title %></span><small class="pull-right"><%= created_at %></small>
+    </script>
+
     <script src="lib/jquery.js"></script>
     <script src="lib/underscore.js"></script>
     <script src="lib/backbone.js"></script>

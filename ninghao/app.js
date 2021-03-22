@@ -42,8 +42,16 @@ var NoteView = Backbone.View.extend({
         'data-role':'list'
     },
 
+    //underscore的template函数使用范例：
+    //var compiled = _.template("hello: <%= name %>");
+    //var html = compiled({name: 'moe'}); // hello: moe
+    //template属性关联underscore的template函数返回的结果（预编译函数）；通过jQuery获取页面上模板标签的内容，作为参数传入underscore的template函数里；
+    template:_.template(jQuery('#list-template').html()),
+
     render:function(){
-        this.$el.html(this.model.get('title'));
+        //this.$el.html(this.model.get('title'));
+        //渲染模板上的内容。view的template属性是一个预编译函数，向该函数传入model的属性。
+        this.$el.html(this.template(this.model.attributes));
     }
 });
 
