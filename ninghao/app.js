@@ -52,6 +52,7 @@ var NoteView = Backbone.View.extend({
         //this.$el.html(this.model.get('title'));
         //渲染模板上的内容。view的template属性是一个预编译函数，向该函数传入model的属性。
         this.$el.html(this.template(this.model.attributes));
+        return this;
     }
 });
 
@@ -95,5 +96,33 @@ var note3 = new Note({id:3,title:'晚上回家洗尿布'});
 
 //对集合的操作：添加、删除、重置、更新、排序集合里的模型的时候，都会触发相应的事件。
 //add、remove、reset、set、pop、shift、push、unshift、at:index
+//获取在集合里的模型get(id)，at(index)
 
 
+/**
+ * 集合视图 = Collection View   
+ * 把集合里面的每个渲染之后的模型的视图放在集合视图里
+ */
+var NoteCollectionView = Backbone.View.extend({
+    tagName:'ul',
+
+    initialize:function() {  //实例化NoteCollectionView时，传入一个字典，collection键对应一个Collection实例
+        //on事件的函数签名： object.on(event, callback, [context])
+        this.collection.on('add',this.addOne,this);   //监听collection，会将collection里的每个模型传入到addOne函数里。
+        this.render();
+    },
+
+    render:function(){
+        this.collection.each(this.addOne,this);  //将collection里的每个模型实例传入到addOne里进行处理
+        return this;
+    },
+
+    addOne:function(note){   //怎么确定传入addOne的参数是一个note实例呢？看用到该函数的render和initialize函数的注释。
+        var noteView = new NoteView({model:note});
+        this.$el.append(noteView.render().el);
+    }
+
+});
+
+var noteCollection = new NoteCollection([note1,note2,note3]);
+var noteCollectionView = new NoteCollectionView({collection:noteCollection});
