@@ -28,3 +28,17 @@ var Note = Backbone.Model.extend({
         }
     }
 });
+
+/**
+ * 视图 - View
+ * el属性，是DOM元素，视图通过它组织内容，默认是div标签
+ * 视图里的render方法可以model的change事件绑定，这样model属性变化后，可以马上反映到视图上
+ */
+var NoteView = Backbone.View.extend({
+    tagName:'li',
+    className:'item',  //设置标签的class
+    //设置li标签的属性,属性名带有“-”，所以要用引号
+    attributes:{
+        'data-role':'list'
+    }
+});
