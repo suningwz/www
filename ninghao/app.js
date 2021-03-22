@@ -40,5 +40,21 @@ var NoteView = Backbone.View.extend({
     //设置li标签的属性,属性名带有“-”，所以要用引号
     attributes:{
         'data-role':'list'
+    },
+
+    render:function(){
+        this.$el.html(this.model.get('title'));
     }
 });
+
+var note = new Note({    //实例化model
+    title:'西红柿炒鸡蛋的做法'
+});
+
+var noteView = new NoteView({    //实例化视图，设置这个视图实例关联的模型实例
+    model:note
+});
+//在控制台执行以下命令查看,比对执行render前后，noteView的标签内容的差异
+//noteView.el
+//noteView.render()
+//noteView.el
