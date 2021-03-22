@@ -108,16 +108,16 @@ var NoteCollectionView = Backbone.View.extend({
 
     initialize:function() {  //实例化NoteCollectionView时，传入一个字典，collection键对应一个Collection实例
         //on事件的函数签名： object.on(event, callback, [context])
-        this.collection.on('add',this.addOne,this);   //监听collection，会将collection里的每个模型传入到addOne函数里。
-        this.render();
+        this.collection.on('add',this.addOne,this);   //监听collection，会将添加到集合collection里的模型实例作为参数传入到addOne函数里。
+        this.render();  //实例化的时候，页面上为什么不会立即显示collection已有的note记录？？？
     },
 
-    render:function(){
+    render:function(){  
         this.collection.each(this.addOne,this);  //将collection里的每个模型实例传入到addOne里进行处理
         return this;
     },
 
-    addOne:function(note){   //怎么确定传入addOne的参数是一个note实例呢？看用到该函数的render和initialize函数的注释。
+    addOne:function(note){   //怎么确定传入addOne的参数是一个note实例呢？请看用到该函数的render和initialize函数的注释。
         var noteView = new NoteView({model:note});
         this.$el.append(noteView.render().el);
     }
