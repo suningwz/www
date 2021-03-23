@@ -126,3 +126,24 @@ var NoteCollectionView = Backbone.View.extend({
 
 var noteCollection = new NoteCollection([note1,note2,note3]);
 var noteCollectionView = new NoteCollectionView({collection:noteCollection});
+
+
+/**
+ * 路由器 - Router
+ */
+
+var NoteRouter = Backbone.Router.extend({
+    routes:{
+        'notes':'index'
+    },
+
+    index:function(){
+        jQuery('#note_list').html(noteCollectionView.el);
+        console.log('笔记列表');
+    }
+
+});
+
+var noteRoute = new NoteRouter;
+Backbone.history.start();  //告诉backbone开始监视haschange事件
+//在浏览器地址栏输入:127.0.0.1/ninghao/#notes
