@@ -134,8 +134,8 @@ var noteCollectionView = new NoteCollectionView({collection:noteCollection});
 
 var NoteRouter = Backbone.Router.extend({
     routes:{
-        'notes':'index',
-        'notes/:id':'show'
+        'notes':'index',      //在浏览器地址栏输入:127.0.0.1/ninghao/#notes
+        'notes/:id':'show'    //在浏览器地址栏输入:127.0.0.1/ninghao/#notes/1
     },
 
     index:function(){
@@ -155,3 +155,4 @@ var NoteRouter = Backbone.Router.extend({
 var noteRoute = new NoteRouter;
 Backbone.history.start();  //告诉backbone开始监视haschange事件
 //在浏览器地址栏输入:127.0.0.1/ninghao/#notes
+
