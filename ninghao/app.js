@@ -134,12 +134,20 @@ var noteCollectionView = new NoteCollectionView({collection:noteCollection});
 
 var NoteRouter = Backbone.Router.extend({
     routes:{
-        'notes':'index'
+        'notes':'index',
+        'notes/:id':'show'
     },
 
     index:function(){
         jQuery('#note_list').html(noteCollectionView.el);
         console.log('笔记列表');
+    },
+
+    show:function(id){
+        console.log('笔记：'+id);
+        var note = noteCollection.get(id);
+        var noteView = new NoteView({model:note});
+        jQuery('#note_list').html(noteView.render().el);
     }
 
 });
